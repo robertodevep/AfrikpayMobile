@@ -1,5 +1,4 @@
 
-   
     import AsyncStorage from '@react-native-async-storage/async-storage';
     import React, { useEffect, useState } from 'react';
     import { Button, Text, View } from 'react-native';

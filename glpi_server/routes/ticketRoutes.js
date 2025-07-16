@@ -21,7 +21,8 @@
     router.delete('/tickets/:id', verifySessionToken, ticketCtrl.delete);
     //router.get('/tickets', verifySessionToken, ticketCtrl.getAll);
     //router.delete('/tickets/:id', ticketCtrl.delete);
-
+    
+    router.put('/tickets/:id', verifySessionToken, ticketCtrl.update);
 
     router.get('/tickets', verifySessionToken, async (req, res, next) => {
       console.log('Requête GET /tickets reçue');

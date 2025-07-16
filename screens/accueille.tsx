@@ -35,6 +35,7 @@ import React, { useEffect, useState } from "react";
         text: string;
         color: string;
         bgColor: string;
+        circleFill?: string;
         }
 
         const statusMapping: Record<string, StatusInfo> = { // cree un objet avec une cle et la valeurs
@@ -42,9 +43,11 @@ import React, { useEffect, useState } from "react";
         "2": { text: "En cours", color: "#FFFFFF", bgColor: "#3E9333" },
         "3": { text: "Planifié", color: "#FFFFFF", bgColor: "#34C759" },
         "4": { text: "En attente", color: "#000000", bgColor: "#FFEFD6" },
-        "5": { text: "Résolu", color: "#000000", bgColor: "#FFFFFF" },
+        "5": { text: "Résolu", color: "#000000", bgColor: "#FFFFFF", circleFill: "transparent"},
         "6": { text: "Clos", color: "#FFFFFF", bgColor: "#000000" }
         };
+        //bgColor: "#FFFFFF",
+        //circleColor: "#000000",
 
         export default function DashboardScreen({ navigation }: { navigation: any }) {
         const [userName, setUserName] = useState("");
@@ -172,6 +175,7 @@ import React, { useEffect, useState } from "react";
         return (
             <View style={styles.container}>
             {/* Header */}
+            
             <View style={styles.header}>
                 <View style={styles.userInfo}>
                 <Text style={styles.welcomeText}>Bienvenue</Text>
@@ -235,7 +239,9 @@ import React, { useEffect, useState } from "react";
                 </View>
                 </View>
 
+
                 {/* Derniers tickets*/}
+                
                 <View style={styles.ticketsContainer}>
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Derniers tickets</Text>

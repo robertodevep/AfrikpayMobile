@@ -5,18 +5,26 @@ const axios = require('axios');
 const { baseUrl, AppToken } = require('../config/glpiConfig');
 const base64 = require('base-64');
 
-async function initSession(login, password) { 
+/*async function initSession(login, password) { 
   try {
     const credentials = base64.encode(`${login}:${password}`);
-
+    
+    console.log(login);
+    console.log(credentials);
+    console.log(AppToken);
     const response = await axios.get(`${baseUrl}/initSession`, {
       headers: {
         'Authorization': `Basic ${credentials}`,
         'App-Token': AppToken,
         'Content-Type': 'application/json'
       },
+      data: {
+        login: login,
+        password: password
+      },
       timeout: 10000
     });
+    
 
     if (!response.data.session_token) {
       throw new Error('Token de session non reçu');
@@ -26,6 +34,43 @@ async function initSession(login, password) {
   } catch (error) {
     console.error('GLPI initSession error:', error.response?.data || error.message);
     throw new Error('Échec de l\'authentification auprès de GLPI');
+    
+  }
+}*/
+
+async function initSession(login, password) {
+  console.log('Tentative d\'authentification GLPI pour l\'utilisateur:', login);
+  console.log(AppToken)
+  console.log('Endpoint:', `${baseUrl}/initSession`);
+ 
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: `${baseUrl}/initSession`,
+      headers: {
+        'App-Token': AppToken,
+        'Content-Type': 'application/json'
+      },
+      data: {
+        login: login,
+        password: password
+      },
+      timeout: 10000
+    });
+    console.log("App token GLPI", AppToken);
+
+    if (!response.data?.session_token) {
+      throw new Error('Réponse invalide de GLPI');
+    }
+
+    return response.data.session_token;
+  } catch (error) {
+    console.error('Erreur détaillée:', {
+      config: error.config,
+      response: error.response?.data,
+      message: error.message
+    });
+    throw new Error(`Échec d'authentification: ${error.response?.data?.message || error.message}`);
   }
 }
 
@@ -71,6 +116,7 @@ async function getCurrentUser(sessionToken) {
         'Content-Type': 'application/json'
       },
       timeout: 10000
+      
     });
 
     if (!response.data || !response.data.id) {

@@ -1,6 +1,38 @@
 
     
     
+        // app.js
+  /*const express = require('express');
+  const bodyParser = require('body-parser');
+  const cors = require('cors');
+  const ticketRoutes = require('./routes/ticketRoutes');
+  const authRoutes = require('./routes/authRoutes'); // Ajoutez cette ligne
+
+  const app = express();
+
+  // Middleware
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+
+  // Routes
+  app.use('/api', ticketRoutes);
+  app.use('/api', authRoutes); // Ajoutez cette ligne
+
+  // Gestion des erreurs
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  });
+
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Serveur en écoute sur le port ${PORT}`);
+    console.log(`URL: http://localhost:${PORT}`);
+  });
+
+  module.exports = app;*/
+
     const express = require('express');
     const router = express.Router();
     const ticketCtrl = require('../controllers/ticketController');

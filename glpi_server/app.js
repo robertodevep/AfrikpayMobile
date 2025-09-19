@@ -38,6 +38,42 @@
         const PORT = 3000;
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));*/
 
+
+
+  // app.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const ticketRoutes = require('./routes/ticketRoutes');
+const authRoutes = require('./routes/authRoutes'); // Importez les routes d'authentification
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api', ticketRoutes);
+app.use('/api', authRoutes); // Ajoutez les routes d'authentification
+
+// Gestion des erreurs
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Erreur interne du serveur' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Serveur en écoute sur le port ${PORT}`);
+  console.log(`URL: http://localhost:${PORT}`);
+});
+
+module.exports = app;
+
+
+  /*
   //original
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -54,6 +90,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // pour gerer les donnees de
 // Routes
 app.use('/api', ticketRoutes);
 
+
+// routes.js ou app.js
+const router = express.Router();
+const authController = require('./controllers/authController');
+
+// Routes d'authentification
+router.post('/api/forgot-password', authController.forgotPassword);
+router.post('/api/reset-password', authController.resetPassword);
+
+
 // Gestion des erreurs
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -67,3 +113,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+*/

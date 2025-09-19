@@ -2,7 +2,7 @@
 
   /// glpi_server/controllers/ticketController.js
   const { initSession, createTicket, getAllTickets, deleteTicket, updateTicket} = require('../services/glpiService');
-  //const glpiService = require('../services/glpiService');
+  const glpiService = require('../services/glpiService');
 
   exports.login = async (req, res) => { 
     try {

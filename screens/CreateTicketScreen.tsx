@@ -231,6 +231,7 @@ import api from "../glpi_server/services/api";
           />
         </View>
         
+        
 
         <View style={styles.formContainer}>
         {/*<Text style={styles.title}>Créer un ticket</Text>*/}
@@ -308,7 +309,7 @@ import api from "../glpi_server/services/api";
       borderBottomWidth: 1, // ligne du bas ligne horizontale
       borderBottomColor: '#F0F0F0', // couleur de la ligne du bas
     },
-    logo: {
+    /*logo: {
       width: 200,
       height: 90,
       marginTop: -85,
@@ -318,7 +319,19 @@ import api from "../glpi_server/services/api";
       marginRight: 15,
       padding: 5,
       marginLeft: 17,
-    },
+    }*/
+      backButton: {
+        marginTop: 30,      
+        marginRight: 15,
+        padding: 5,
+        marginLeft: 17,
+      },
+      logo: {
+        width: 200,
+        height: 90,
+        marginTop: 2,      
+        marginRight: 60,
+      },      
     formContainer: {
       padding: 25, 
       marginTop: -55, // pour que le container soit en dessous du logo

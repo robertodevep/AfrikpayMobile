@@ -2,8 +2,8 @@
     import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from "react";
-        
-        import {
+            
+    import {
     ActivityIndicator, // spinner de chargement
     Alert,
     Animated, // animation pour le menu deroulant
@@ -17,7 +17,8 @@ import React, { useEffect, useState } from "react";
     View
 } from 'react-native';
 
-    import api from "../glpi_server/services/api"; // client api pour les requetes glpi
+    import HeaderAccueil from "@/components/headerAccueil";
+import api from "../glpi_server/services/api"; // client api pour les requetes glpi
 
         interface Ticket { // definition de la structure des tickets avec ces proprieter
         id: number;
@@ -37,6 +38,7 @@ import React, { useEffect, useState } from "react";
         bgColor: string;
         circleFill?: string;
         }
+
 
         const statusMapping: Record<string, StatusInfo> = { // cree un objet avec une cle et la valeurs
         "1": { text: "Nouveau", color: "#FFFFFF", bgColor: "#3178C6" },
@@ -117,32 +119,7 @@ import React, { useEffect, useState } from "react";
             fetchAllTickets();
         };
 
-        const toggleMenu = () => {
-            setMenuVisible(!menuVisible);
-            Animated.spring(animation, {  // lance une animation en douceur
-            toValue: menuVisible ? 0 : 1,  // ouverture et fermeture du menu
-            friction: 5,     // definit la supplesse de l'animation
-            useNativeDriver: true // optimise l'animation
-            }).start();    // demarre l'animation
-        };
-
-    
-        const handleLogout = async () => { // deconnexion
-            
-            try {
-                
-                await AsyncStorage.multiRemove(['session_token', 'username']); // supprime la session et le nom
-                navigation.navigate('login'); 
-            } catch (error) {
-                console.error('Logout error:', error);
-                Alert.alert('Erreur', 'Une erreur est survenue lors de la déconnexion');
-            }
-        };
-
-        const handleCreateTicket = () => {
-            setMenuVisible(false);
-            navigation.navigate('createTicket');
-        };
+       
 
         const formatDate = (dateStr?: string) => {
             if (!dateStr) return "N/A";
@@ -175,38 +152,8 @@ import React, { useEffect, useState } from "react";
         return (
             <View style={styles.container}>
             {/* Header */}
-            
-            <View style={styles.header}>
-                <View style={styles.userInfo}>
-                <Text style={styles.welcomeText}>Bienvenue</Text>
-                <Text style={styles.userName}>{userName || "Utilisateur"}</Text>
-                </View>
-                <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-                <Ionicons name="menu" size={24} color="#000" />
-                </TouchableOpacity>
-            </View>
 
-            {/* Menu déroulant */}
-            {menuVisible && (
-                <Animated.View style={[styles.dropdownMenu, {
-                opacity: animation,
-                transform: [{
-                    translateY: animation.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [-20, 0]
-                    })
-                }]
-                }]}>
-                <TouchableOpacity style={styles.menuItem} onPress={handleCreateTicket}>
-                    <Ionicons name="add-circle-outline" size={20} color="#000" />
-                    <Text style={styles.menuItemText}>Créer un ticket</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-                    <Ionicons name="log-out-outline" size={20} color="#000" />
-                    <Text style={styles.menuItemText}>Déconnexion</Text>
-                </TouchableOpacity>
-                </Animated.View>
-            )}
+            <HeaderAccueil navigation={navigation}/>
 
             {/* Contenu principal avec RefreshControl */}
             <ScrollView 
@@ -296,7 +243,6 @@ import React, { useEffect, useState } from "react";
 
         // ... (les styles restent exactement les mêmes que dans votre code original)
 
-
         const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -316,65 +262,7 @@ import React, { useEffect, useState } from "react";
             fontSize: 16,
             
         },
-        header: { // entete de la page
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 20,
-            paddingTop: Platform.OS === 'ios' ? 50 : 20,
-            backgroundColor: '#FFF',
-            ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-            },
-            android: {
-                elevation: 2,
-            },
-            }),
-        },
-        userInfo: {
-            flexDirection: 'column',  
-        },
-        welcomeText: {
-            fontSize: 14,
-            color: '#8E8E93',
-            
-        },
-        userName: {
-            fontSize: 18,
-            fontWeight: '600',
-            color: '#1C1C1E',
-            marginTop: 4,
-            
-        },
-        menuButton: {
-            padding: 8,
-            
-        },
-        dropdownMenu: {
-            position: 'absolute',
-            right: 20,
-            top: Platform.OS === 'ios' ? 90 : 70,
-            backgroundColor: '#FFF',
-            borderRadius: 8,
-            padding: 10,
-            zIndex: 100,
-            
-            ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.2,
-                shadowRadius: 4,
-            },
-            android: {
-                elevation: 5,
-            },
-            }),
-        },
+        
         menuItem: {
             flexDirection: 'row',
             alignItems: 'center',
@@ -552,4 +440,4 @@ import React, { useEffect, useState } from "react";
             shadowRadius: 4,
             zIndex: 10, // pour s'assurer que le menu est au dessus des autre elements
           },
-        });
+    });

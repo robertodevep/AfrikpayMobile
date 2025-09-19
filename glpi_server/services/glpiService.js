@@ -55,7 +55,7 @@ async function initSession(login, password) {
         login: login,
         password: password
       },
-      timeout: 10000
+      timeout: 40000
     });
     console.log("App token GLPI", AppToken);
 
@@ -86,7 +86,7 @@ async function createTicket(sessionToken, input) {
           'Session-Token': sessionToken,
           'Content-Type': 'application/json'
         },
-        timeout: 10000
+        timeout: 40000
       }
     );
 
@@ -115,7 +115,7 @@ async function getCurrentUser(sessionToken) {
         'Session-Token': sessionToken,
         'Content-Type': 'application/json'
       },
-      timeout: 10000
+      timeout: 40000
       
     });
 
@@ -148,7 +148,7 @@ async function getAllTickets(sessionToken) {
       params: {
         "range": "0-100" // Limite le nombre de résultats
       },
-      timeout: 10000
+      timeout: 40000
     });
 
     if (!response.data || !Array.isArray(response.data)) {
@@ -185,7 +185,7 @@ async function getAllTickets(sessionToken) {
           params: {
             force_purge: true
           },
-          timeout: 10000
+          timeout: 40000
         }
       );
 
@@ -252,6 +252,8 @@ async function getAllTickets(sessionToken) {
       throw error;
     }
   }
+
+  
 
   module.exports = {
     initSession,

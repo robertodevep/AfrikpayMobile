@@ -3,10 +3,10 @@
   import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-  // Création de l'instance axios
+  // Création de l'instance axios 192.168.100.37      192.168.1.139
   const api = axios.create({
-    baseURL: 'http://192.168.1.139:3000/api',
-    timeout: 10000,
+    baseURL: 'http://192.168.100.37:3000/api',
+    timeout: 50000,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -18,7 +18,7 @@ import axios from 'axios';
     return axios.isAxiosError(payload);
   };
 
-  // Intercepteur de requête
+  // Intercepteur de requêtedgd 
   api.interceptors.request.use(
     async (config) => {
       const token = await AsyncStorage.getItem('session_token');
@@ -42,3 +42,5 @@ import axios from 'axios';
   );
 
   export default api;
+
+ 
